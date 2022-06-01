@@ -74,8 +74,8 @@ import heapq
 
 #############################################################
 
-telegram_token='your telegram token'
-chat_id='group chat id
+telegram_token = 'your telegram token'
+chat_id = 'group chat id
 
 class Proccess:
     def start_proc(self):
