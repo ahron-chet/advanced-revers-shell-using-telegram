@@ -1,6 +1,6 @@
 ###########################################
 ##            24/05/2022                 ##
-##     tlegram advance reverse shell     ##
+##    Telegram advance reverse shell     ##
 ##           Aharon chetrit              ##
 ##                                       ##
 ##  Developer: Aharon chetrit            ##
